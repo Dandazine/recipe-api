@@ -1,3 +1,4 @@
+import { waitForElementToBeRemoved } from "@testing-library/react";
 import { useEffect, useState } from "react";
 import Recipe from "./Recipe";
 
@@ -11,10 +12,12 @@ function App() {
   // Stores the full finished search text
   const [search, setSearch] = useState("popular");
 
+  // Runs the function fetch recipe when the "search" state is updated
   useEffect(() => {
     fetchRecipe();
   }, [search]);
 
+  // Fetches data from the API to get an array of objects (recipes) and then initializes that array to the "recipe" state
   const fetchRecipe = async () => {
     // fetch response
     const response = await fetch(
@@ -23,16 +26,14 @@ function App() {
     // the data from the response and makes it into a json
     const data = await response.json();
     setRecipes(data.hits);
-    console.log(data.hits);
   };
 
-  // Handles user content
+  // Handles user content- everytime that input field is updated, it updates the "content" state and stores that difference in the content, then when user submits the form, it takes whatever that was in the content field and applies it to the search
   const handleContent = (e) => {
     setContent(e.target.value);
-    console.log(content);
   };
 
-  // Handles the Search
+  // Handles the Search- once user presses the submit button (or enter) to complete the form, it will 1. prevent the form from doing what normal forms do, then 2. find the content state to see what the user is trying to search for, then 3. it updates the search state which then triggers a useEffect that calls the fetch recipes function
   const handleSearch = (e) => {
     e.preventDefault();
     if (content.trim()) {
@@ -41,6 +42,7 @@ function App() {
     setContent("");
   };
 
+  // This could be removed, but this is essentially to make sure the api and all required functions are all properly mounted before it runs any of the html
   useEffect(() => {
     setMounted(true);
   }, [recipes]);
@@ -64,7 +66,7 @@ function App() {
                 />
                 <button
                   type="submit"
-                  className="bg-[#ffe598] text-[#12151d] py-1 px-6 rounded-xl block mx-auto"
+                  className="bg-[#ffe598] hover:bg-[#e0c576] text-[#12151d] py-1 px-6 rounded-xl block mx-auto"
                 >
                   Search
                 </button>
