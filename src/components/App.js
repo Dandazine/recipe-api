@@ -49,7 +49,7 @@ function App() {
     <>
       {mounted ? (
         <>
-          <main className="bg-[#12151d] text-[#fbfcfb] h-full">
+          <main className="bg-[#12151d] text-[#fbfcfb] min-h-screen h-full">
             <section className="mx-auto sticky z-50 top-0 p-6 bg-[#171e2b] max-w-max grid grid-cols-1 rounded-b-3xl shadow-2xl border-current">
               <h1 className="text-center text-[#d6fa52]">
                 Search for your recipes!
